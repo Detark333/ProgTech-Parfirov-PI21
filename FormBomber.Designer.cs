@@ -34,6 +34,7 @@
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonUp = new System.Windows.Forms.Button();
             this.pictureBoxPlainGo = new System.Windows.Forms.PictureBox();
+            this.buttonCreatePlain = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlainGo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,11 +101,22 @@
             this.pictureBoxPlainGo.TabIndex = 0;
             this.pictureBoxPlainGo.TabStop = false;
             // 
+            // buttonCreatePlain
+            // 
+            this.buttonCreatePlain.Location = new System.Drawing.Point(93, 0);
+            this.buttonCreatePlain.Name = "buttonCreatePlain";
+            this.buttonCreatePlain.Size = new System.Drawing.Size(75, 23);
+            this.buttonCreatePlain.TabIndex = 6;
+            this.buttonCreatePlain.Text = "CreatePlain";
+            this.buttonCreatePlain.UseVisualStyleBackColor = true;
+            this.buttonCreatePlain.Click += new System.EventHandler(this.ButtonCreatePlain_Click);
+            // 
             // FormBomber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(695, 412);
+            this.Controls.Add(this.buttonCreatePlain);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonLeft);
@@ -126,6 +138,7 @@
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonRight;
         private System.Windows.Forms.Button buttonDown;
+        private System.Windows.Forms.Button buttonCreatePlain;
     }
 }
 

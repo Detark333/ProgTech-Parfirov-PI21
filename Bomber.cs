@@ -5,65 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 namespace WindowsFormsPlains
 {
-    public class Bomber 
+    public class Bomber : Plain
     {
-        protected const int plainWidth = 100;
-        protected const int plainHeight = 60;
-        protected float _startPosX;
-        protected float _startPosY;
-        protected int _pictureWidth;
-        protected int _pictureHeight;
-        public int MaxSpeed { protected set; get; }
-        public float Weight { protected set; get; }
-        public Color MainColor { protected set; get; }
         public int NumberBombs { private set; get; }
         public int NumberGuns { private set; get; }
-        public Color DopColor { private set; get; }
-        public bool Bombs { private set; get; }
+        public Color DopColor { private set; get; } 
+        public bool Bombs { private set; get; }    
         public bool BackF { private set; get; }
         public bool Tail { private set; get; }
-        public void MoveTransport(Direction direction)
-        {
-            float step = MaxSpeed * 100 / Weight;
-            switch (direction)
-            {
-                case Direction.Right:
-                    if (_startPosX + step < _pictureWidth - plainWidth - 180)
-                    {
-                        _startPosX += step;
-                    }
-                    break;
-                case Direction.Left:
-                    if (_startPosX - step > -30)
-                    {
-                        _startPosX -= step;
-                    }
-                    break;
-                case Direction.Up:
-                    if (_startPosY - step > 10)
-                    {
-                        _startPosY -= step;
-                    }
-                    break;
-                case Direction.Down:
-                    if (_startPosY + step < _pictureHeight - plainHeight - 80)
-                    {
-                        _startPosY += step;
-                    }
-                    break;
-            }
-        }       
-        public void SetPosition(int x, int y, int width, int height)
-        {
-            _startPosX = x;
-            _startPosY = y;
-            _pictureWidth = width;
-            _pictureHeight = height;
-        }
-        public Bomber(int numberBombs,int maxSpeed, int numberGuns, Color mainColor, Color dopColor, bool bombs, bool backF, bool tail, float weight) 
-        {
+        public Bomber(int numberBombs,int maxSpeed, int numberGuns, Color mainColor, Color dopColor, bool bombs, bool backF, bool tail, float weight) : base(maxSpeed, weight, mainColor)        {
             NumberBombs = numberBombs;
             MaxSpeed = maxSpeed;
             NumberGuns = numberGuns;
@@ -73,15 +26,14 @@ namespace WindowsFormsPlains
             BackF = backF;
             Tail = tail;
             Weight = weight;
+
         }
-        public void DrawPlain(Graphics g)
+        public override void DrawPlain(Graphics g)
         {
             Pen pen = new Pen(Color.Black);
             Brush penFill = new SolidBrush(MainColor);
-            Brush penBlack = new SolidBrush(DopColor);  
-            g.FillRectangle(penFill, _startPosX + 200, _startPosY - 15 + 10, 40, 140);
-            g.DrawRectangle(pen, _startPosX, _startPosY + 35, 232 + 60, 55);
-            g.FillRectangle(penFill, _startPosX, _startPosY + 35, 232 + 60, 55);
+            Brush penBlack = new SolidBrush(DopColor);
+            base.DrawPlain(g);
             if (Bombs)
             {
                 DrawGuns(g);
@@ -90,6 +42,7 @@ namespace WindowsFormsPlains
             {
                 DrawBackF(g);
             }
+
         }
         public void DrawGuns(Graphics g)
         {

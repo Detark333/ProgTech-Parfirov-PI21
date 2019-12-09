@@ -12,17 +12,19 @@ namespace WindowsFormsPlains
 {
     public partial class FormBomber : Form
     {
-        private Bomber plain;
+        private ITransport plain;
         public FormBomber()
         {
             InitializeComponent();
         }
+        private Bomber bomber;
         private void Draw()
         {
             Bitmap bmp = new Bitmap(pictureBoxPlainGo.Width, pictureBoxPlainGo.Height);
             Graphics gr = Graphics.FromImage(bmp);
             plain.DrawPlain(gr);
             pictureBoxPlainGo.Image = bmp;
+
         }
         private void ButtonCreateBomber_Click(object sender, EventArgs e)
         {
@@ -52,6 +54,13 @@ namespace WindowsFormsPlains
                     break;
             }
             Draw();
-        }       
+        }
+        private void ButtonCreatePlain_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            plain = new Plain(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue);
+            plain.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlainGo.Width, pictureBoxPlainGo.Height);
+            Draw();
+        }
     }
 }
