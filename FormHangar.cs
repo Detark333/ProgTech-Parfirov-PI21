@@ -12,6 +12,7 @@ namespace WindowsFormsPlains
 {
     public partial class FormHangar : Form
     {
+        FormPlainConfig form;
         MultiLevelHangar hangar;
         private const int countLevel = 5;
         public FormHangar()
@@ -103,6 +104,28 @@ namespace WindowsFormsPlains
         private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
             Draw();
+        }
+
+        private void ButtonOpenForm_Click(object sender, EventArgs e)
+        {
+            form = new FormPlainConfig();
+            form.AddEvent(AddPlain);
+            form.Show();
+        }
+        private void AddPlain(ITransport plain)
+        {
+            if (plain != null && listBoxLevels.SelectedIndex > -1)
+            {
+                int place = hangar[listBoxLevels.SelectedIndex] + plain;
+                if (place > -1)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Самолет не удалось поставить");
+                }
+            }
         }
     }
 }

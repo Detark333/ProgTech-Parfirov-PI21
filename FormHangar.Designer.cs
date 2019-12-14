@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.pictureBoxHangar = new System.Windows.Forms.PictureBox();
-            this.buttonParkThePlain = new System.Windows.Forms.Button();
-            this.buttonParkTheBomber = new System.Windows.Forms.Button();
             this.groupBoxForInsert = new System.Windows.Forms.GroupBox();
             this.labelPlace = new System.Windows.Forms.Label();
             this.pictureBoxTakePlain = new System.Windows.Forms.PictureBox();
@@ -38,6 +36,7 @@
             this.maskedTextBoxPlace = new System.Windows.Forms.MaskedTextBox();
             this.labelTakePlain = new System.Windows.Forms.Label();
             this.listBoxLevels = new System.Windows.Forms.ListBox();
+            this.buttonOpenForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHangar)).BeginInit();
             this.groupBoxForInsert.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakePlain)).BeginInit();
@@ -50,26 +49,6 @@
             this.pictureBoxHangar.Size = new System.Drawing.Size(785, 810);
             this.pictureBoxHangar.TabIndex = 0;
             this.pictureBoxHangar.TabStop = false;
-            // 
-            // buttonParkThePlain
-            // 
-            this.buttonParkThePlain.Location = new System.Drawing.Point(826, 23);
-            this.buttonParkThePlain.Name = "buttonParkThePlain";
-            this.buttonParkThePlain.Size = new System.Drawing.Size(128, 43);
-            this.buttonParkThePlain.TabIndex = 2;
-            this.buttonParkThePlain.Text = "Park The Plain";
-            this.buttonParkThePlain.UseVisualStyleBackColor = true;
-            this.buttonParkThePlain.Click += new System.EventHandler(this.ButtonParkThePlain_Click);
-            // 
-            // buttonParkTheBomber
-            // 
-            this.buttonParkTheBomber.Location = new System.Drawing.Point(826, 90);
-            this.buttonParkTheBomber.Name = "buttonParkTheBomber";
-            this.buttonParkTheBomber.Size = new System.Drawing.Size(128, 42);
-            this.buttonParkTheBomber.TabIndex = 3;
-            this.buttonParkTheBomber.Text = "Park The Bomber";
-            this.buttonParkTheBomber.UseVisualStyleBackColor = true;
-            this.buttonParkTheBomber.Click += new System.EventHandler(this.ButtonParkTheBomber_Click);
             // 
             // groupBoxForInsert
             // 
@@ -135,15 +114,24 @@
             this.listBoxLevels.TabIndex = 5;
             this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
             // 
+            // buttonOpenForm
+            // 
+            this.buttonOpenForm.Location = new System.Drawing.Point(864, 50);
+            this.buttonOpenForm.Name = "buttonOpenForm";
+            this.buttonOpenForm.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpenForm.TabIndex = 6;
+            this.buttonOpenForm.Text = "Add";
+            this.buttonOpenForm.UseVisualStyleBackColor = true;
+            this.buttonOpenForm.Click += new System.EventHandler(this.ButtonOpenForm_Click);
+            // 
             // FormHangar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1229, 845);
+            this.Controls.Add(this.buttonOpenForm);
             this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBoxForInsert);
-            this.Controls.Add(this.buttonParkTheBomber);
-            this.Controls.Add(this.buttonParkThePlain);
             this.Controls.Add(this.pictureBoxHangar);
             this.Name = "FormHangar";
             this.Text = "Hangar";
@@ -158,8 +146,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxHangar;
-        private System.Windows.Forms.Button buttonParkThePlain;
-        private System.Windows.Forms.Button buttonParkTheBomber;
         private System.Windows.Forms.GroupBox groupBoxForInsert;
         private System.Windows.Forms.PictureBox pictureBoxTakePlain;
         private System.Windows.Forms.Button buttonTake;
@@ -167,5 +153,6 @@
         private System.Windows.Forms.Label labelTakePlain;
         private System.Windows.Forms.Label labelPlace;
         private System.Windows.Forms.ListBox listBoxLevels;
+        private System.Windows.Forms.Button buttonOpenForm;
     }
 }
