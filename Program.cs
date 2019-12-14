@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsPlains
 {
+    public delegate void plainDelegate(ITransport plain);
     static class Program
     {
         [STAThread]
