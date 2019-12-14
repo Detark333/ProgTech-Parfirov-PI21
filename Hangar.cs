@@ -45,8 +45,8 @@ namespace WindowsFormsPlains
         }
         
 
-         public static T operator -(Hangar<T> p, int index)
-         {
+        public static T operator -(Hangar<T> p, int index)
+        {
             if (index < 0 || index > p._places.Length)
             {
                 return null;
@@ -59,42 +59,42 @@ namespace WindowsFormsPlains
                 return plain;
             }
             return null;
-         }
+        }
         
-            private bool CheckFreePlace(int index)
+        private bool CheckFreePlace(int index)
+        {
+            return _places[index] == null;
+        }
+        public void Draw(Graphics g)
+        {
+            DrawMarking(g);
+            for (int i = 0; i < _places.Length; i++)
             {
-                return _places[index] == null;
-            }
-            public void Draw(Graphics g)
-            {
-                DrawMarking(g);
-                for (int i = 0; i < _places.Length; i++)
+                if (!CheckFreePlace(i))
                 {
-                    if (!CheckFreePlace(i))
-                    {
-                        _places[i].DrawPlain(g);
-                    }
+                    _places[i].DrawPlain(g);
                 }
             }
+        }
 
-            private void DrawMarking(Graphics g)
+        private void DrawMarking(Graphics g)
+        {
+            Pen pen = new Pen(Color.Black, 3);
+            g.DrawRectangle(pen, 0, 0, (_places.Length / 5) * _placeSizeWidth, 1000);
+            for (int i = 0; i < _places.Length / 5; i++)
             {
-                Pen pen = new Pen(Color.Black, 3);
-                g.DrawRectangle(pen, 0, 0, (_places.Length / 5) * _placeSizeWidth, 1000);
-                for (int i = 0; i < _places.Length / 5; i++)
+                if (i % 2 != 1)
                 {
-                    if (i % 2 != 1)
+                    for (int j = 0; j < 12; ++j)
                     {
-                        for (int j = 0; j < 12; ++j)
+                        if (j % 2 != 1)
                         {
-                            if (j % 2 != 1)
-                            {
-                                g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + 300, j * _placeSizeHeight);
-                            }
+                            g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + 300, j * _placeSizeHeight);
                         }
-                        g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 920);
                     }
+                    g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 920);
                 }
             }
+        }
     }
 }
