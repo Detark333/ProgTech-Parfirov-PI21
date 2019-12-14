@@ -31,7 +31,7 @@ namespace WindowsFormsPlains
         public Bomber(string info) : base(info)
         {
             string[] strs = info.Split(';');
-            if (strs.Length == 4)
+            if (strs.Length == 9)
             {
                 MaxSpeed = Convert.ToInt32(strs[0]);
                 Weight = Convert.ToInt32(strs[1]);
