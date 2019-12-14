@@ -17,6 +17,7 @@ namespace WindowsFormsPlains
         {
             InitializeComponent();
             hangar = new Hangar<ITransport>(20, pictureBoxHangar.Width, pictureBoxHangar.Height);
+            Draw();
         }
 
         private void Draw()
@@ -50,7 +51,7 @@ namespace WindowsFormsPlains
                     int place = hangar + bomber;
                     Draw();
                 }
-            }
+            }
         }
 
         private void ButtonTake_Click(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace WindowsFormsPlains
                     pictureBoxTakePlain.Image = bmp;
                 }
                 Draw();
-            }
+            }
         }
     }
 }
