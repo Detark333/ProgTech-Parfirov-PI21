@@ -13,7 +13,7 @@ namespace WindowsFormsPlains
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormBomber());
+            Application.Run(new FormHangar());
         }
     }
 }
