@@ -9,8 +9,10 @@ namespace WindowsFormsPlains
 {
     public class Hangar<T> where T : class, ITransport
     {
-        private T[] _places;
-        
+        private Dictionary<int, T> _places;
+
+        private int _maxCount;
+
         private int PictureWidth { get; set; }
         
         private int PictureHeight { get; set; }
@@ -21,18 +23,19 @@ namespace WindowsFormsPlains
 
         public Hangar(int sizes, int pictureWidth, int pictureHeight)
         {
-            _places = new T[sizes];
+            _maxCount = sizes;
+            _places = new Dictionary<int, T>();
             PictureWidth = pictureWidth;
             PictureHeight = pictureHeight;
-            for (int i = 0; i < _places.Length; i++)
-            {
-                _places[i] = null;
-            }
         }
 
         public static int operator +(Hangar<T> p, T plain)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            if (p._places.Count == p._maxCount)
+            {
+                return -1;
+            }
+            for (int i = 0; i < p._maxCount; i++)
             {
                 if (p.CheckFreePlace(i))
                 {
@@ -45,43 +48,36 @@ namespace WindowsFormsPlains
         }
         
 
-        public static T operator -(Hangar<T> p, int index)
-        {
-            if (index < 0 || index > p._places.Length)
-            {
-                return null;
-            }
+         public static T operator -(Hangar<T> p, int index)
+         {
             if (!p.CheckFreePlace(index))
-                
             {
                 T plain = p._places[index];
-                p._places[index] = null;
+                p._places.Remove(index);
                 return plain;
             }
             return null;
         }
-        
+
         private bool CheckFreePlace(int index)
-        {
-            return _places[index] == null;
+            {
+                return !_places.ContainsKey(index);
         }
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            var keys = _places.Keys.ToList();
+            for (int i = 0; i < keys.Count; i++)
             {
-                if (!CheckFreePlace(i))
-                {
-                    _places[i].DrawPlain(g);
-                }
+                _places[keys[i]].DrawPlain(g);
             }
         }
 
         private void DrawMarking(Graphics g)
         {
             Pen pen = new Pen(Color.Black, 3);
-            g.DrawRectangle(pen, 0, 0, (_places.Length / 5) * _placeSizeWidth, 1000);
-            for (int i = 0; i < _places.Length / 5; i++)
+            g.DrawRectangle(pen, 0, 0, (_maxCount / 5) * _placeSizeWidth, 1000);
+            for (int i = 0; i < _maxCount / 5; i++)
             {
                 if (i % 2 != 1)
                 {
