@@ -23,6 +23,7 @@ namespace WindowsFormsPlains
                 listBoxLevels.Items.Add("Уровень " + (i + 1));
             }
             listBoxLevels.SelectedIndex = 0;
+            Draw();
         }
 
         private void Draw()
