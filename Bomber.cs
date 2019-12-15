@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsPlains
 {
-    public class Bomber : Plain
+    public class Bomber : Plain, IComparable<Bomber>, IEquatable<Bomber>
     {
         public int NumberBombs { private set; get; }
         public int NumberGuns { private set; get; }
@@ -43,6 +43,76 @@ namespace WindowsFormsPlains
                 NumberGuns = Convert.ToInt32(strs[7]);
                 NumberBombs = Convert.ToInt32(strs[8]);
             }
+        }
+        public int CompareTo(Bomber other)
+        {
+            var res = (this is Plain).CompareTo(other is Plain);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            if (Bombs != other.Bombs)
+            {
+                Bombs.CompareTo(other.Bombs);
+            }
+            if (BackF != other.BackF)
+            {
+                BackF.CompareTo(other.BackF);
+            }
+            if (Tail != other.Tail)
+            {
+                Tail.CompareTo(other.Tail);
+            }
+            if (NumberGuns != other.NumberGuns)
+            {
+                NumberGuns.CompareTo(other.NumberGuns);
+            }
+            if (NumberBombs != other.NumberBombs)
+            {
+                NumberBombs.CompareTo(other.NumberBombs);
+            }
+            return 0;
+        }
+        public bool Equals(Bomber other)
+        {
+            var res = (this as Plain).Equals(other as Plain);
+            if (!res)
+            {
+                return res;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is Bomber plainObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(plainObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
         public override void DrawPlain(Graphics g)
         {

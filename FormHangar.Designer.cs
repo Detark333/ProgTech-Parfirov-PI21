@@ -43,6 +43,7 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.buttonSortList = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHangar)).BeginInit();
             this.groupBoxForInsert.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakePlain)).BeginInit();
@@ -153,14 +154,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
             // 
@@ -173,11 +174,22 @@
             this.openFileDialog.FileName = "openFileDialog1";
             this.openFileDialog.Filter = "txt file | *.txt";
             // 
+            // buttonSortList
+            // 
+            this.buttonSortList.Location = new System.Drawing.Point(864, 109);
+            this.buttonSortList.Name = "buttonSortList";
+            this.buttonSortList.Size = new System.Drawing.Size(75, 23);
+            this.buttonSortList.TabIndex = 8;
+            this.buttonSortList.Text = "Sort";
+            this.buttonSortList.UseVisualStyleBackColor = true;
+            this.buttonSortList.Click += new System.EventHandler(this.ButtonSortList_Click);
+            // 
             // FormHangar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1229, 845);
+            this.Controls.Add(this.buttonSortList);
             this.Controls.Add(this.buttonOpenForm);
             this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBoxForInsert);
@@ -214,5 +226,8 @@
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button buttonSort;
+        private System.Windows.Forms.Button buttonLisrSort;
+        private System.Windows.Forms.Button buttonSortList;
     }
 }

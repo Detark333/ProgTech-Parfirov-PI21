@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsPlains
 {
-    public class Hangar<T> where T : class, ITransport
+    public class Hangar<T> : IEnumerator<T>, IEnumerable<T>, IComparable<Hangar<T>> where T : class, ITransport
     {
         private Dictionary<int, T> _places;
 
@@ -21,19 +22,32 @@ namespace WindowsFormsPlains
      
         private const int _placeSizeHeight = 80;
 
+        private int _currentIndex;
+
         public Hangar(int sizes, int pictureWidth, int pictureHeight)
         {
             _maxCount = sizes;
             _places = new Dictionary<int, T>();
             PictureWidth = pictureWidth;
             PictureHeight = pictureHeight;
+            _currentIndex = -1;
         }
-
+        public int GetKey
+        {
+            get
+            {
+                return _places.Keys.ToList()[_currentIndex];
+            }
+        }
         public static int operator +(Hangar<T> p, T plain)
         {
             if (p._places.Count == p._maxCount)
             {
                 throw new HangarOverflowException();
+            }
+            if (p._places.ContainsValue(plain))
+            {
+                throw new HangarAlreadyHaveException();
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -115,6 +129,88 @@ namespace WindowsFormsPlains
                     throw new HangarOccupiedPlaceException(ind);
                 }
             }
-        }
+        }        public T Current
+        {
+            get
+            {
+                return _places[_places.Keys.ToList()[_currentIndex]];
+            }
+        }
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+        public void Dispose()
+        {
+            _places.Clear();
+        }
+        public bool MoveNext()
+        {
+            if (_currentIndex + 1 >= _places.Count)
+            {
+                Reset();
+                return false;
+            }
+            _currentIndex++;
+            return true;
+        }
+        public void Reset()
+        {
+            _currentIndex = -1;
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public int CompareTo(Hangar<T> other)
+        {
+            if (_places.Count > other._places.Count)
+            {
+                return -1;
+            }
+            else if (_places.Count < other._places.Count)
+
+            {
+                return 1;
+            }
+            else if (_places.Count > 0)
+            {
+                var thisKeys = _places.Keys.ToList();
+                var otherKeys = other._places.Keys.ToList();
+                for (int i = 0; i < _places.Count; ++i)
+                {
+                    if (_places[thisKeys[i]] is Plain && other._places[thisKeys[i]] is
+                   Bomber)
+                    {
+                        return 1;
+                    }
+                    if (_places[thisKeys[i]] is Plain && other._places[thisKeys[i]]
+                    is Bomber)
+                    {
+                        return -1;
+                    }
+                    if (_places[thisKeys[i]] is Plain && other._places[thisKeys[i]] is
+                    Plain)
+                    {
+                        return (_places[thisKeys[i]] is
+                      Plain).CompareTo(other._places[thisKeys[i]] is Plain);
+                    }
+                    if (_places[thisKeys[i]] is Bomber && other._places[thisKeys[i]]
+                    is Bomber)
+                    {
+                        return (_places[thisKeys[i]] is
+                       Bomber).CompareTo(other._places[thisKeys[i]] is Bomber);
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

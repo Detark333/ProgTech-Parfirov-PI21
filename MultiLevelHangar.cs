@@ -119,5 +119,9 @@ namespace WindowsFormsPlains
             }
             return true;
         }
+        public void Sort()
+        {
+            hangarStages.Sort();
+        }
     }
 }
