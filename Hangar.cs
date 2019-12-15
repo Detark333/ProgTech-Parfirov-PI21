@@ -33,7 +33,7 @@ namespace WindowsFormsPlains
         {
             if (p._places.Count == p._maxCount)
             {
-                return -1;
+                throw new HangarOverflowException();
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -56,7 +56,7 @@ namespace WindowsFormsPlains
                 p._places.Remove(index);
                 return plain;
             }
-            return null;
+            throw new HangarNotFoundException(index);
         }
 
         private bool CheckFreePlace(int index)
@@ -101,7 +101,7 @@ namespace WindowsFormsPlains
                 {
                     return _places[ind];
                 }
-                return null;
+                throw new HangarNotFoundException(ind);
             }
             set
             {
@@ -109,6 +109,10 @@ namespace WindowsFormsPlains
                 {
                     _places.Add(ind, value);
                     _places[ind].SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5 * _placeSizeHeight + 15, PictureWidth, PictureHeight);
+                }
+                else
+                {
+                    throw new HangarOccupiedPlaceException(ind);
                 }
             }
         }
