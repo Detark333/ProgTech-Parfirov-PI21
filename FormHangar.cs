@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,9 +16,11 @@ namespace WindowsFormsPlains
         FormPlainConfig form;
         MultiLevelHangar hangar;
         private const int countLevel = 5;
+        private Logger logger;
         public FormHangar()
         {
             InitializeComponent();
+            logger = LogManager.GetCurrentClassLogger();
             hangar = new MultiLevelHangar(countLevel, pictureBoxHangar.Width, pictureBoxHangar.Height);
             for (int i = 0; i < countLevel; i++)
             {
@@ -83,21 +86,35 @@ namespace WindowsFormsPlains
             {
                 if (maskedTextBoxPlace.Text != "")
                 {
-                    var plain = hangar[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBoxPlace.Text);
-                    if (plain != null)
+                    try
                     {
+                        var plain = hangar[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBoxPlace.Text);
+                        if (plain != null)
+                        {
+                            Bitmap bmp = new Bitmap(pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
+                            Graphics gr = Graphics.FromImage(bmp);
+                            plain.SetPosition(5, 5, pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
+                            plain.DrawPlain(gr);
+                            pictureBoxTakePlain.Image = bmp;
+                        }
+                        else
+                        {
+                            Bitmap bmp = new Bitmap(pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
+                            pictureBoxTakePlain.Image = bmp;
+                        }
+                        logger.Info("Изъят самолет " + plain.ToString() + " с места " + maskedTextBoxPlace.Text);
+                        Draw();
+                    }
+                    catch (HangarNotFoundException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Bitmap bmp = new Bitmap(pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
-                        Graphics gr = Graphics.FromImage(bmp);
-                        plain.SetPosition(5, 5, pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
-                        plain.DrawPlain(gr);
                         pictureBoxTakePlain.Image = bmp;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Bitmap bmp = new Bitmap(pictureBoxTakePlain.Width, pictureBoxTakePlain.Height);
-                        pictureBoxTakePlain.Image = bmp;
-                    }
-                    Draw();
+                        MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -116,15 +133,21 @@ namespace WindowsFormsPlains
         {
             if (plain != null && listBoxLevels.SelectedIndex > -1)
             {
-                int place = hangar[listBoxLevels.SelectedIndex] + plain;
-                if (place > -1)
+                try
                 {
-                    Draw();
+                    int place = hangar[listBoxLevels.SelectedIndex] + plain;
+                    logger.Info("Добавлен самолет " + plain.ToString() + " на место " + place);                    Draw();
                 }
-                else
+                catch (HangarOverflowException ex)
                 {
-                    MessageBox.Show("Самолет не удалось поставить");
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -135,8 +158,9 @@ namespace WindowsFormsPlains
                 try {
                     hangar.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " + saveFileDialog.FileName);
                 }
-                catch(Exception)
+                catch(Exception ex)
                 {
                     MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -147,13 +171,19 @@ namespace WindowsFormsPlains
         {
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (hangar.LoadData(openFileDialog.FileName))
+                try
                 {
-                MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    hangar.LoadData(openFileDialog.FileName);
+                    MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + openFileDialog.FileName);
                 }
-                else
+                catch (HangarOccupiedPlaceException ex)
                 {
-                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Draw();
             }
