@@ -28,6 +28,22 @@ namespace WindowsFormsPlains
             Weight = weight;
 
         }
+        public Bomber(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 9)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+                Bombs = Convert.ToBoolean(strs[4]);
+                BackF = Convert.ToBoolean(strs[5]);
+                Tail = Convert.ToBoolean(strs[6]);
+                NumberGuns = Convert.ToInt32(strs[7]);
+                NumberBombs = Convert.ToInt32(strs[8]);
+            }
+        }
         public override void DrawPlain(Graphics g)
         {
             Pen pen = new Pen(Color.Black);
@@ -66,5 +82,9 @@ namespace WindowsFormsPlains
         {
             DopColor = color;
         }
+        public override string ToString()
+        {
+            return base.ToString() + ";" + DopColor.Name + ";" + Bombs + ";" + BackF + ";" + Tail + ";" + NumberGuns + ";" + NumberBombs;
+        }
     }
 }
