@@ -37,6 +37,7 @@
             this.buttonTake = new System.Windows.Forms.Button();
             this.maskedTextBoxPlace = new System.Windows.Forms.MaskedTextBox();
             this.labelTakePlain = new System.Windows.Forms.Label();
+            this.listBoxLevels = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHangar)).BeginInit();
             this.groupBoxForInsert.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakePlain)).BeginInit();
@@ -125,11 +126,21 @@
             this.labelTakePlain.TabIndex = 0;
             this.labelTakePlain.Text = "Take the plain";
             // 
+            // listBoxLevels
+            // 
+            this.listBoxLevels.FormattingEnabled = true;
+            this.listBoxLevels.Location = new System.Drawing.Point(1007, 50);
+            this.listBoxLevels.Name = "listBoxLevels";
+            this.listBoxLevels.Size = new System.Drawing.Size(129, 82);
+            this.listBoxLevels.TabIndex = 5;
+            this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
+            // 
             // FormHangar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1229, 845);
+            this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBoxForInsert);
             this.Controls.Add(this.buttonParkTheBomber);
             this.Controls.Add(this.buttonParkThePlain);
@@ -155,5 +166,6 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBoxPlace;
         private System.Windows.Forms.Label labelTakePlain;
         private System.Windows.Forms.Label labelPlace;
+        private System.Windows.Forms.ListBox listBoxLevels;
     }
 }
